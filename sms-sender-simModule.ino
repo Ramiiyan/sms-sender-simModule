@@ -8,7 +8,7 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 
-#define NumberD "+94779048973"  //Enter Sender Number with contry code.(DEFAULT)
+#define NumberD "*************"  //Enter Sender Number with contry code.(DEFAULT)
 #define GSM_APN "dialogbb"
 #define NB_APN  "nbiot"
 

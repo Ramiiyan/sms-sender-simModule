@@ -8,12 +8,14 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 
-#define NumberD "*************"  //Enter Sender Number with contry code.(DEFAULT)
+#define NumberD "+94779048973"  //Enter Sender Number with contry code.(DEFAULT)
+#define GSM_APN "dialogbb"
+#define NB_APN  "nbiot"
 
 SoftwareSerial SerialGSM(7, 8);
 TinyGsm modem(SerialGSM);
 
-String number = "***"; // Enter Your Country code For use as At command
+String number = "+94"; // Enter Your Country code For use as At command
 String ccid;
 void done();
 
@@ -22,25 +24,24 @@ void setup()
   Serial.begin(115200);
   delay(300);
   SerialGSM.begin(4800);      // 4800 is defalut sim7000 baud. change if you have any Exceptions
-  //modem.setNetworkMode(13); // 38-LTE, 13-GSM
-  //modem.setPreferredMode(2); // 2-NBIOT, 1-GSM
+  modem.setNetworkMode(38); // 38-LTE, 13-GSM
+  modem.setPreferredMode(2); // 2-NBIOT, 1-CAT
 
   Serial.print(F("Finding Network...")); 
   modem.restart();  
-  delay(4000);
-  Serial.print("Testing..");
+  delay(2000);
+  
   if (!modem.waitForNetwork())
   {
     Serial.println(F("Network Fail."));  // Check your SIM7000 Module 
-    while (true)
-      ;
+    while (true);
   }
   else
   {
     Serial.println(F("Network identified."));
     Serial.print(F("Signal Strength : "));
     Serial.println(modem.getSignalQuality());
-    if (!modem.gprsConnect("******* ", "", ""))  // use As "Sim APN", "userName", "password" //for default username, pwd will be null("","") 
+    if (!modem.gprsConnect(NB_APN, "", ""))  // use As "Sim APN", "userName", "password" //for default username, pwd will be null("","") 
     {
       Serial.println(F("GPRS Fail"));
     }
